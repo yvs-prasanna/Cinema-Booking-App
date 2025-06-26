@@ -51,182 +51,378 @@ npm run dev
 > Server will run at `http://localhost:3000`
 
 ---
+## API Endpoints
 
-## 🔐 Authentication
+### 1. Authentication APIs
 
-### Register  
-**POST** `/api/auth/register`
-
-#### Request Body:
+#### POST /api/auth/register
+Register a new user
 ```json
+Request Body:
 {
-  "name": "Alice",
-  "email": "alice@example.com",
-  "password": "securepassword"
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "securePassword123",
+    "mobile": "+919876543210",
+    "dateOfBirth": "1990-01-01"
+}
+
+Response:
+{
+    "success": true,
+    "message": "User registered successfully",
+    "userId": 1
 }
 ```
 
----
-
-### Login  
-**POST** `/api/auth/login`
-
-#### Request Body:
+#### POST /api/auth/login
+User login
 ```json
+Request Body:
 {
-  "email": "alice@example.com",
-  "password": "securepassword"
+    "email": "john@example.com",
+    "password": "securePassword123"
+}
+
+Response:
+{
+    "success": true,
+    "token": "jwt_token_here",
+    "user": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com"
+    }
 }
 ```
 
----
-### Users
-## Get Cities/Locations
-**GET**  `/api/cities`
+### 2. Location APIs
 
----
+#### GET /api/cities
+Get cities with theaters
+```json
+Response:
+{
+    "success": true,
+    "cities": [
+        {
+            "id": 1,
+            "name": "Mumbai",
+            "state": "Maharashtra",
+            "theaterCount": 15
+        },
+        {
+            "id": 2,
+            "name": "Delhi",
+            "state": "Delhi",
+            "theaterCount": 12
+        }
+    ]
+}
+```
 
-## 🎞️ Movies
+### 3. Movie APIs
 
-### Get All Movies  
+#### GET /api/movies
+Get currently running movies
+```
 Query Parameters:
 - city: City ID
 - language: Filter by language (Hindi, English, etc.)
 - genre: Filter by genre
 - format: 2D, 3D, IMAX
-###
-**GET** `/api/movies?city=1&language=English&genre=Drama&format=3D`
 
-
-### Get Movie by ID  
-**GET** `/api/movies/:id`
-
-
-### Get Upcoming Movies
-**GET** `/api/movies/upcoming`
-
----
-
-## 📅 Screenings
-
-### Get Screenings for a Movie  
-**GET** `/api/screenings?movieId=1`
-
-### Get Available Seats  
-**GET** `/api/screenings/:screeningId/seats`
-
----
-
-## 🎟️ Bookings
-
-### Get My Bookings  
-**GET** `/api/bookings`
-
-### Book Seats  
-**POST** `/api/bookings/create`
-### Request Body
-```json
+Response:
 {
-    "showId": 102,
-    "seats": ["C10", "B8"],
-    "totalAmount": 600,
-    "userDetails": {
-        "email": "user5@gmail.com",
-        "mobile": "+919876543210"
-    }
-}
-```
-
-
-## 🍿 Food & Beverages
-
-### Get All Items  
-**GET** `/api/food`
-
-### Get Item by ID  
-**GET** `/api/food/:id`
-
-### Add Item to Booking  
-**POST** `/api/bookings/:bookingId/food`
-
-#### Request Body:
-```json
-{
-    "bookingId": "PVR0008661887",
-    "items": [
-        {"itemId": 1, "quantity": 2},
-        {"itemId": 5, "quantity": 2}
+    "success": true,
+    "movies": [
+        {
+            "id": 1,
+            "title": "Avengers: Endgame",
+            "duration": "180 mins",
+            "rating": "UA",
+            "genre": ["Action", "Adventure", "Sci-Fi"],
+            "language": ["English", "Hindi"],
+            "formats": ["2D", "3D", "IMAX"],
+            "posterUrl": "poster_url",
+            "releaseDate": "2024-04-26",
+            "imdbRating": 8.4
+        }
     ]
 }
 ```
 
-### 🪑 Seat Layout
-
-### Get Seat Layout for Screening
-**GET**  `/api/screenings/:screeningId/seats`
-Returns the seat map (available, booked, and reserved) for a given screening.
-
-### Reserve Specific Seats
-**POST**  `/api/screenings/:screeningId/reserve`
-
-### Request Body:
+#### GET /api/movies/:id
+Get movie details
 ```json
+Response:
 {
-  "selectedSeats": ["B1", "B2"]
+    "success": true,
+    "movie": {
+        "id": 1,
+        "title": "Avengers: Endgame",
+        "synopsis": "The Avengers assemble once more...",
+        "duration": "180 mins",
+        "rating": "UA",
+        "genre": ["Action", "Adventure", "Sci-Fi"],
+        "language": ["English", "Hindi"],
+        "formats": ["2D", "3D", "IMAX"],
+        "cast": [
+            {
+                "name": "Robert Downey Jr.",
+                "role": "Tony Stark / Iron Man"
+            }
+        ],
+        "crew": {
+            "director": "Anthony Russo, Joe Russo",
+            "producer": "Kevin Feige"
+        },
+        "posterUrl": "poster_url",
+        "trailerUrl": "trailer_url"
+    }
 }
 ```
-Seats are temporarily held until payment is confirmed.
 
-### 💳 Payments
-### Simulate Payment
-**POST**  `/api/payments/checkout`
+#### GET /api/movies/upcoming
+Get upcoming movies
 
-### Request Body:
-```json
+### 4. Theater APIs
+
+#### GET /api/theaters
+Get theaters by city
+```
+Query Parameters:
+- cityId: City ID (required)
+- movieId: Filter theaters showing specific movie
+
+Response:
 {
-    "bookingId": "PVR0008661887",
+    "success": true,
+    "theaters": [
+        {
+            "id": 1,
+            "name": "PVR Phoenix Mall",
+            "address": "Phoenix MarketCity, Kurla West, Mumbai",
+            "facilities": ["Parking", "Food Court", "Wheelchair Accessible"],
+            "screens": 8,
+            "latitude": 19.0860,
+            "longitude": 72.8886
+        }
+    ]
+}
+```
+
+### 5. Show APIs
+
+#### GET /api/shows
+Get shows for a movie
+```
+Query Parameters:
+- movieId: Movie ID (required)
+- cityId: City ID (required)
+- date: Show date (YYYY-MM-DD)
+
+Response:
+{
+    "success": true,
+    "date": "2024-03-20",
+    "shows": [
+        {
+            "theaterId": 1,
+            "theaterName": "PVR Phoenix Mall",
+            "shows": [
+                {
+                    "showId": 101,
+                    "showTime": "10:30 AM",
+                    "format": "2D",
+                    "language": "English",
+                    "screenName": "Screen 1",
+                    "soundSystem": "Dolby Atmos",
+                    "availableSeats": 120,
+                    "totalSeats": 200,
+                    "prices": {
+                        "regular": 200,
+                        "premium": 300,
+                        "recliner": 500
+                    }
+                }
+            ]
+        }
+    ]
+}
+```
+
+### 6. Seat APIs
+
+#### GET /api/shows/:showId/seats
+Get seat layout and availability
+```json
+Response:
+{
+    "success": true,
+    "screen": "Screen 1",
+    "seatLayout": {
+        "regular": {
+            "rows": ["A", "B", "C", "D", "E"],
+            "seatsPerRow": 20,
+            "price": 200
+        },
+        "premium": {
+            "rows": ["F", "G", "H"],
+            "seatsPerRow": 20,
+            "price": 300
+        },
+        "recliner": {
+            "rows": ["I", "J"],
+            "seatsPerRow": 15,
+            "price": 500
+        }
+    },
+    "bookedSeats": ["A5", "A6", "B10", "B11", "F8", "F9"],
+    "blockedSeats": ["C15", "C16"]
+}
+```
+
+### 7. Booking APIs
+
+#### POST /api/bookings/create
+Create a booking (requires authentication)
+```json
+Request Body:
+{
+    "showId": 101,
+    "seats": ["F10", "F11"],
+    "totalAmount": 600,
+    "userDetails": {
+        "email": "john@example.com",
+        "mobile": "+919876543210"
+    }
+}
+
+Response:
+{
+    "success": true,
+    "bookingId": "PVR123456",
+    "message": "Booking confirmed",
+    "totalAmount": 600,
+    "showDetails": {
+        "movie": "Avengers: Endgame",
+        "theater": "PVR Phoenix Mall",
+        "screen": "Screen 1",
+        "showTime": "10:30 AM",
+        "date": "2024-03-20",
+        "seats": ["F10", "F11"]
+    }
+}
+```
+
+#### GET /api/bookings
+Get user's booking history (requires authentication)
+
+#### GET /api/bookings/:bookingId
+Get booking details
+
+#### POST /api/bookings/:bookingId/cancel
+Cancel booking (requires authentication)
+
+### 8. Food & Beverage APIs
+
+#### GET /api/fnb/menu
+Get F&B menu
+```json
+Response:
+{
+    "success": true,
+    "categories": [
+        {
+            "name": "Popcorn",
+            "items": [
+                {
+                    "id": 1,
+                    "name": "Regular Salted Popcorn",
+                    "size": "Medium",
+                    "price": 200,
+                    "isVeg": true
+                },
+                {
+                    "id": 2,
+                    "name": "Cheese Popcorn",
+                    "size": "Large",
+                    "price": 350,
+                    "isVeg": true
+                }
+            ]
+        },
+        {
+            "name": "Beverages",
+            "items": [...]
+        }
+    ]
+}
+```
+
+#### POST /api/fnb/order
+Add F&B to booking
+```json
+Request Body:
+{
+    "bookingId": "PVR123456",
+    "items": [
+        {
+            "itemId": 1,
+            "quantity": 2
+        },
+        {
+            "itemId": 5,
+            "quantity": 2
+        }
+    ]
+}
+```
+
+### 9. Payment APIs
+
+#### POST /api/payments/initiate
+Initiate payment for booking
+```json
+Request Body:
+{
+    "bookingId": "PVR123456",
     "paymentMethod": "card",
     "includesFnb": true
 }
-```
 
-Returns a mock payment confirmation.
-
-
-### 🛠️ Admin APIs
-These endpoints are for administrative purposes only.
-
-### Add New Movie
-**POST** `/api/admin/movies`
-
-### Request Body:
-```json
+Response:
 {
-  "title": "Inception",
-  "synopsis": "A skilled thief is given a chance at redemption...",
-  "duration": 148,
-  "rating": "UA",
-  "language": ["English", "Hindi"],
-  "formats": ["2D", "IMAX"],
-  "cast": ["Leonardo DiCaprio", "Joseph Gordon-Levitt"],
-  "crew": ["Christopher Nolan", "Emma Thomas"],
-  "releaseDate": "2024-07-16",
-  "genre": ["Action", "Sci-Fi", "Thriller"],
-  "theaterId": 1
+    "success": true,
+    "transactionId": "TXN789456",
+    "amount": 1000,
+    "breakdown": {
+        "tickets": 600,
+        "fnb": 400,
+        "convenienceFee": 50,
+        "gst": 90,
+        "total": 1140
+    }
 }
 ```
 
-### Schedule a Screening
-**POST**  `/api/admin/screenings`
+#### POST /api/payments/confirm
+Confirm payment
 
-### Request Body:
-```json
-{
-  "movieId": 1,
-  "startTime": "2025-06-26T19:00:00",
-  "screenNumber": 3
-}
-```
+### 10. Admin APIs (Bonus)
+
+#### POST /api/admin/movies
+Add new movie
+
+#### POST /api/admin/shows
+Create show schedule
+
+#### PUT /api/admin/shows/:id
+Update show details
+
+#### GET /api/admin/reports/occupancy
+Get theater occupancy reports
 
 > 🔐 Requires token:
 ```http
