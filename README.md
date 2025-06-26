@@ -89,6 +89,7 @@ Query Parameters:
 - language: Filter by language (Hindi, English, etc.)
 - genre: Filter by genre
 - format: 2D, 3D, IMAX
+###
 **GET** `/api/movies?city=1&language=English&genre=Drama&format=3D`
 
 
