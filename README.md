@@ -37,9 +37,10 @@ cd cinema-booking-platform
 npm install
 ```
 
-### 3. Setup Project
+### 3. Setup Database
 ```bash
 npm run setup
+npm run seed
 ```
 
 ### 4. Run in Development
