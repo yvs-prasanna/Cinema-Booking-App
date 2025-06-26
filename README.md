@@ -103,6 +103,9 @@ npm run dev
 
 ## 🎟️ Bookings
 
+### Get My Bookings  
+**GET** `/api/bookings`
+
 ### Book Seats  
 **POST** `/api/bookings`
 
@@ -115,8 +118,103 @@ npm run dev
 }
 ```
 
-### Get My Bookings  
-**GET** `/api/bookings`
+## 🍿 Food & Beverages
+
+### Get All Items  
+**GET** `/api/food`
+
+### Get Item by ID  
+**GET** `/api/food/:id`
+
+### Add Item to Booking  
+**POST** `/api/bookings/:bookingId/food`
+
+#### Request Body:
+```json
+{
+  "itemId": 3,
+  "quantity": 2
+}
+```
+
+### 🪑 Seat Layout
+
+### Get Seat Layout for Screening
+**GET**  `/api/screenings/:screeningId/seats`
+Returns the seat map (available, booked, and reserved) for a given screening.
+
+### Reserve Specific Seats
+**POST**  `/api/screenings/:screeningId/reserve`
+
+### Request Body:
+```json
+{
+  "selectedSeats": ["B1", "B2"]
+}
+```
+Seats are temporarily held until payment is confirmed.
+
+### 💳 Payments
+### Simulate Payment
+**POST**  `/api/payments/checkout`
+
+### Request Body:
+```json
+{
+  "bookingId": 101,
+  "amount": 350.00,
+  "paymentMethod": "UPI"
+}
+```
+
+Returns a mock payment confirmation.
+
+🔐 Requires:
+
+http
+Copy
+Edit
+Authorization: Bearer <your_jwt_token>
+🛠️ Admin APIs
+These endpoints are for administrative purposes only.
+
+Add New Movie
+POST /api/admin/movies
+
+Request Body:
+json
+Copy
+Edit
+{
+  "title": "Oppenheimer",
+  "duration": 180,
+  "genre": "Biography",
+  "posterUrl": "https://example.com/poster.jpg"
+}
+Schedule a Screening
+POST /api/admin/screenings
+
+Request Body:
+json
+Copy
+Edit
+{
+  "movieId": 1,
+  "startTime": "2025-06-26T19:00:00",
+  "screenNumber": 3
+}
+Add Food Item
+POST /api/admin/food
+
+Request Body:
+json
+Copy
+Edit
+{
+  "name": "Cheese Popcorn",
+  "price": 150,
+  "category": "Snacks"
+}
 
 > 🔐 Requires token:
 ```http
