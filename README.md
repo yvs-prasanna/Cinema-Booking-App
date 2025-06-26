@@ -58,7 +58,7 @@ npm run dev
 #### POST /api/auth/register
 Register a new user
 ```json
-Request Body:
+"Request Body":
 {
     "name": "John Doe",
     "email": "john@example.com",
@@ -67,7 +67,7 @@ Request Body:
     "dateOfBirth": "1990-01-01"
 }
 
-Response:
+"Response":
 {
     "success": true,
     "message": "User registered successfully",
@@ -78,13 +78,13 @@ Response:
 #### POST /api/auth/login
 User login
 ```json
-Request Body:
+"Request Body":
 {
     "email": "john@example.com",
     "password": "securePassword123"
 }
 
-Response:
+"Response":
 {
     "success": true,
     "token": "jwt_token_here",
@@ -101,7 +101,7 @@ Response:
 #### GET /api/cities
 Get cities with theaters
 ```json
-Response:
+"Response":
 {
     "success": true,
     "cities": [
@@ -155,7 +155,7 @@ Response:
 #### GET /api/movies/:id
 Get movie details
 ```json
-Response:
+"Response":
 {
     "success": true,
     "movie": {
@@ -257,7 +257,7 @@ Response:
 #### GET /api/shows/:showId/seats
 Get seat layout and availability
 ```json
-Response:
+"Response":
 {
     "success": true,
     "screen": "Screen 1",
@@ -288,7 +288,7 @@ Response:
 #### POST /api/bookings/create
 Create a booking (requires authentication)
 ```json
-Request Body:
+"Request Body":
 {
     "showId": 101,
     "seats": ["F10", "F11"],
@@ -299,7 +299,7 @@ Request Body:
     }
 }
 
-Response:
+"Response":
 {
     "success": true,
     "bookingId": "PVR123456",
@@ -330,7 +330,7 @@ Cancel booking (requires authentication)
 #### GET /api/fnb/menu
 Get F&B menu
 ```json
-Response:
+"Response":
 {
     "success": true,
     "categories": [
@@ -364,7 +364,7 @@ Response:
 #### POST /api/fnb/order
 Add F&B to booking
 ```json
-Request Body:
+"Request Body":
 {
     "bookingId": "PVR123456",
     "items": [
@@ -385,14 +385,14 @@ Request Body:
 #### POST /api/payments/initiate
 Initiate payment for booking
 ```json
-Request Body:
+"Request Body":
 {
     "bookingId": "PVR123456",
     "paymentMethod": "card",
     "includesFnb": true
 }
 
-Response:
+"Response":
 {
     "success": true,
     "transactionId": "TXN789456",
