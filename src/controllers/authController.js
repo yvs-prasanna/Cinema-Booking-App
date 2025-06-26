@@ -20,7 +20,7 @@ const registerAPI = async(req, res) => {
         return res.status(201).json({ success: "true",message: 'User registered successfully', userId: db.lastID });
     }
     else{
-        return res.status(400).json({ error: 'Username already exists' });
+        return res.status(400).json({ error: 'User already exists' });
     }
 }
 

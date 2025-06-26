@@ -1,0 +1,589 @@
+{
+	"info": {
+		"_postman_id": "2a4e286b-0642-49a3-883f-9fb3b19abb62",
+		"name": "Cinema Booking Platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38820211",
+		"_collection_link": "https://blue-shadow-902495.postman.co/workspace/Testing~c16d92c7-0f83-448c-8ff5-6f86218d6587/collection/38820211-2a4e286b-0642-49a3-883f-9fb3b19abb62?action=share&source=collection_link&creator=38820211"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register API",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user5\",\r\n    \"email\" : \"user5@gmail.com\",\r\n    \"password\" : \"123486\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login API",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"user5\",\r\n    \"email\" : \"user5@gmail.com\",\r\n    \"password\" : \"123486\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Locations API",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsImVtYWlsIjoidXNlcjVAZ21haWwuY29tIiwiaWF0IjoxNzUwMzMxNzY5LCJleHAiOjE3NTAzMzUzNjl9.u6gL_fuph-41cZHGAn8ItmcQzwR3qb-l-5v3i4oIEGU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"email\": \"user1@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"cities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Get Movies API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/movies",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Movie Details API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/movies/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Upcoming Movies API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/movies/upcoming",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"movies",
+								"upcoming"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shows",
+			"item": [
+				{
+					"name": "Get Shows for Movie API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/shows",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"shows"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Seat Layout",
+			"item": [
+				{
+					"name": "Get Seat layout for Show API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/shows/1/seats",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"shows",
+								"1",
+								"seats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Create Booking API",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"showId\": 102,\r\n    \"seats\": [\"C10\", \"B8\"],\r\n    \"totalAmount\": 600,\r\n    \"userDetails\": {\r\n        \"email\": \"user5@gmail.com\",\r\n        \"mobile\": \"+919876543210\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/bookings/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"bookings",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking History",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsImVtYWlsIjoidXNlcjVAZ21haWwuY29tIiwiaWF0IjoxNzUwMzMyNDU5LCJleHAiOjE3NTAzMzYwNTl9.2tT7AwdwDod4pEdDUfrGsCrWxObCuCxBQCtnN2BFd0c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/bookings/user-bookings",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"user-bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsImVtYWlsIjoidXNlcjVAZ21haWwuY29tIiwiaWF0IjoxNzUwMzMyNDU5LCJleHAiOjE3NTAzMzYwNTl9.2tT7AwdwDod4pEdDUfrGsCrWxObCuCxBQCtnN2BFd0c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/bookings/21",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"bookings",
+								"21"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Food & Beverages",
+			"item": [
+				{
+					"name": "Get Menu API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/fnb/menu",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"fnb",
+								"menu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order Food API",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookingId\": \"PVR0008661887\",\r\n    \"items\": [\r\n        {\r\n            \"itemId\": 1,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"itemId\": 5,\r\n            \"quantity\": 2\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/fnb/order",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"fnb",
+								"order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Initiate Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsImVtYWlsIjoidXNlcjFAZ21haWwuY29tIiwiaWF0IjoxNzUwMzI4NzE5LCJleHAiOjE3NTAzMzIzMTl9.hsWreYX0ZLLTKtNnVPa1MHxqjj3xlgbiMA-WfSnw_1U",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookingId\": \"PVR0008661887\",\r\n    \"paymentMethod\": \"card\",\r\n    \"includesFnb\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/payments/initiate",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"payments",
+								"initiate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Payment",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get Users API",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBjaW5lbWEuY29tIiwiaWF0IjoxNzUwMzMwNzIxLCJleHAiOjE3NTAzMzQzMjF9.pec25M7_qBxgd_E2p9zG5Jpkiw25GxrOppPU0-46U3E",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/users/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new Movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBjaW5lbWEuY29tIiwiaWF0IjoxNzUwMzI5Njg1LCJleHAiOjE3NTAzMzMyODV9.7xZgBZ4lINbYsj6-_nrBG6g-__aK2i2xGvvTfJpZm8g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Inception\",\r\n  \"synopsis\": \"A skilled thief is given a chance at redemption if he can successfully perform inception – planting an idea into someone's subconscious.\",\r\n  \"duration\": 148,\r\n  \"rating\": \"UA\",\r\n  \"language\": [\"English\", \"Hindi\"],\r\n  \"formats\": [\"2D\", \"IMAX\"],\r\n  \"cast\": [\r\n    \"Leonardo DiCaprio\",\r\n    \"Joseph Gordon-Levitt\",\r\n    \"Elliot Page\"\r\n  ],\r\n  \"crew\": [\r\n    \"Christopher Nolan\",\r\n    \"Emma Thomas\"\r\n  ],\r\n  \"releaseDate\": \"2024-07-16\",\r\n  \"genre\": [\"Action\", \"Sci-Fi\", \"Thriller\"],\r\n  \"theaterId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/admin/movie",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"movie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Show Schedule",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBjaW5lbWEuY29tIiwiaWF0IjoxNzUwMzI5Njg1LCJleHAiOjE3NTAzMzMyODV9.7xZgBZ4lINbYsj6-_nrBG6g-__aK2i2xGvvTfJpZm8g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Inception\",\r\n  \"synopsis\": \"A skilled thief is given a chance at redemption if he can successfully perform inception – planting an idea into someone's subconscious.\",\r\n  \"duration\": 148,\r\n  \"rating\": \"UA\",\r\n  \"language\": [\"English\", \"Hindi\"],\r\n  \"formats\": [\"2D\", \"IMAX\"],\r\n  \"cast\": [\r\n    \"Leonardo DiCaprio\",\r\n    \"Joseph Gordon-Levitt\",\r\n    \"Elliot Page\"\r\n  ],\r\n  \"crew\": [\r\n    \"Christopher Nolan\",\r\n    \"Emma Thomas\"\r\n  ],\r\n  \"releaseDate\": \"2024-07-16\",\r\n  \"genre\": [\"Action\", \"Sci-Fi\", \"Thriller\"],\r\n  \"theaterId\": 1\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{URL}}/api/admin/show",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Show Schedule",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBjaW5lbWEuY29tIiwiaWF0IjoxNzUwMzI5Njg1LCJleHAiOjE3NTAzMzMyODV9.7xZgBZ4lINbYsj6-_nrBG6g-__aK2i2xGvvTfJpZm8g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Inception\",\r\n  \"synopsis\": \"A skilled thief is given a chance at redemption if he can successfully perform inception – planting an idea into someone's subconscious.\",\r\n  \"duration\": 148,\r\n  \"rating\": \"UA\",\r\n  \"language\": [\"English\", \"Hindi\"],\r\n  \"formats\": [\"2D\", \"IMAX\"],\r\n  \"cast\": [\r\n    \"Leonardo DiCaprio\",\r\n    \"Joseph Gordon-Levitt\",\r\n    \"Elliot Page\"\r\n  ],\r\n  \"crew\": [\r\n    \"Christopher Nolan\",\r\n    \"Emma Thomas\"\r\n  ],\r\n  \"releaseDate\": \"2024-07-16\",\r\n  \"genre\": [\"Action\", \"Sci-Fi\", \"Thriller\"],\r\n  \"theaterId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/admin/show/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"show",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
