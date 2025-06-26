@@ -169,52 +169,46 @@ Seats are temporarily held until payment is confirmed.
 
 Returns a mock payment confirmation.
 
-🔐 Requires:
 
-http
-Copy
-Edit
-Authorization: Bearer <your_jwt_token>
-🛠️ Admin APIs
+### 🛠️ Admin APIs
 These endpoints are for administrative purposes only.
 
-Add New Movie
-POST /api/admin/movies
+### Add New Movie
+**POST** `/api/admin/movies`
 
-Request Body:
-json
-Copy
-Edit
+### Request Body:
+```json
 {
   "title": "Oppenheimer",
   "duration": 180,
   "genre": "Biography",
   "posterUrl": "https://example.com/poster.jpg"
 }
-Schedule a Screening
-POST /api/admin/screenings
+```
 
-Request Body:
-json
-Copy
-Edit
+### Schedule a Screening
+**POST**  `/api/admin/screenings`
+
+### Request Body:
+```json
 {
   "movieId": 1,
   "startTime": "2025-06-26T19:00:00",
   "screenNumber": 3
 }
-Add Food Item
-POST /api/admin/food
+```
 
-Request Body:
-json
-Copy
-Edit
+### Add Food Item
+**POST**  `/api/admin/food`
+
+### Request Body:
+```json
 {
   "name": "Cheese Popcorn",
   "price": 150,
   "category": "Snacks"
 }
+```
 
 > 🔐 Requires token:
 ```http
