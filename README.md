@@ -415,6 +415,31 @@ Confirm payment
 #### POST /api/admin/movies
 Add new movie
 
+### Request Body
+```json
+{
+  "title": "Inception",
+  "synopsis": "A skilled thief is given a chance at redemption if he can successfully perform inception – planting an idea into someone's subconscious.",
+  "duration": 148,
+  "rating": "UA",
+  "language": ["English", "Hindi"],
+  "formats": ["2D", "IMAX"],
+  "cast": [
+    "Leonardo DiCaprio",
+    "Joseph Gordon-Levitt",
+    "Elliot Page"
+  ],
+  "crew": [
+    "Christopher Nolan",
+    "Emma Thomas"
+  ],
+  "releaseDate": "2024-07-16",
+  "genre": ["Action", "Sci-Fi", "Thriller"],
+  "theaterId": 1
+}
+
+```
+
 #### POST /api/admin/shows
 Create show schedule
 
