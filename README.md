@@ -80,6 +80,11 @@ npm run dev
 ```
 
 ---
+### Users
+## Get Cities/Locations
+**GET**  `/api/cities`
+
+---
 
 ## 🎞️ Movies
 
@@ -95,6 +100,10 @@ Query Parameters:
 
 ### Get Movie by ID  
 **GET** `/api/movies/:id`
+
+
+### Get Upcoming Movies
+**GET** `/api/movies/upcoming`
 
 ---
 
@@ -114,16 +123,20 @@ Query Parameters:
 **GET** `/api/bookings`
 
 ### Book Seats  
-**POST** `/api/bookings`
-
-#### Request Body:
+**POST** `/api/bookings/create`
+### Request Body
 ```json
 {
-  "screeningId": 5,
-  "selectedSeats": ["A1", "A2"],
-  "paymentMethod": "card"
+    "showId": 102,
+    "seats": ["C10", "B8"],
+    "totalAmount": 600,
+    "userDetails": {
+        "email": "user5@gmail.com",
+        "mobile": "+919876543210"
+    }
 }
 ```
+
 
 ## 🍿 Food & Beverages
 
@@ -139,8 +152,11 @@ Query Parameters:
 #### Request Body:
 ```json
 {
-  "itemId": 3,
-  "quantity": 2
+    "bookingId": "PVR0008661887",
+    "items": [
+        {"itemId": 1, "quantity": 2},
+        {"itemId": 5, "quantity": 2}
+    ]
 }
 ```
 
@@ -168,9 +184,9 @@ Seats are temporarily held until payment is confirmed.
 ### Request Body:
 ```json
 {
-  "bookingId": 101,
-  "amount": 350.00,
-  "paymentMethod": "UPI"
+    "bookingId": "PVR0008661887",
+    "paymentMethod": "card",
+    "includesFnb": true
 }
 ```
 
@@ -186,10 +202,17 @@ These endpoints are for administrative purposes only.
 ### Request Body:
 ```json
 {
-  "title": "Oppenheimer",
-  "duration": 180,
-  "genre": "Biography",
-  "posterUrl": "https://example.com/poster.jpg"
+  "title": "Inception",
+  "synopsis": "A skilled thief is given a chance at redemption...",
+  "duration": 148,
+  "rating": "UA",
+  "language": ["English", "Hindi"],
+  "formats": ["2D", "IMAX"],
+  "cast": ["Leonardo DiCaprio", "Joseph Gordon-Levitt"],
+  "crew": ["Christopher Nolan", "Emma Thomas"],
+  "releaseDate": "2024-07-16",
+  "genre": ["Action", "Sci-Fi", "Thriller"],
+  "theaterId": 1
 }
 ```
 
@@ -202,18 +225,6 @@ These endpoints are for administrative purposes only.
   "movieId": 1,
   "startTime": "2025-06-26T19:00:00",
   "screenNumber": 3
-}
-```
-
-### Add Food Item
-**POST**  `/api/admin/food`
-
-### Request Body:
-```json
-{
-  "name": "Cheese Popcorn",
-  "price": 150,
-  "category": "Snacks"
 }
 ```
 
