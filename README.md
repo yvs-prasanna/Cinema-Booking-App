@@ -84,7 +84,12 @@ npm run dev
 ## 🎞️ Movies
 
 ### Get All Movies  
-**GET** `/api/movies`
+**GET** `/api/movies?city=1&language=English&genre=Drama&format=3D`
+Query Parameters:
+- city: City ID
+- language: Filter by language (Hindi, English, etc.)
+- genre: Filter by genre
+- format: 2D, 3D, IMAX
 
 ### Get Movie by ID  
 **GET** `/api/movies/:id`
