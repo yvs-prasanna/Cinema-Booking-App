@@ -409,8 +409,9 @@ Initiate payment for booking
 
 #### POST /api/payments/confirm
 Confirm payment
+
 ### Request Body 
-json```
+```json
 {
     "transactionId": "TXN948649",
     "gatewayResponse": {
