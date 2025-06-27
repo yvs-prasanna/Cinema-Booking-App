@@ -2,6 +2,7 @@ const express = require("express")
 const db = require("../config/database") 
 
 const app = express()
+require("dotenv").config();
 app.use(express.json())
 
 
@@ -15,12 +16,13 @@ const areSeatsAlreadyBooked = async(db, showId, seats) =>  {
     AND bs.seat_identifier IN (${placeholders})
   `;
   const params = [showId, ...seats];
-  return await db.query(query, params); // Array of { seat_identifier }
+  return await db.query(query, params); 
 }
-
 
 const createBookingAPI = async (req, res) => {
     const { showId, seats, totalAmount, userDetails } = req.body;
+    const userId = req.userId;
+
 
     if (!showId || !seats || !totalAmount || !userDetails) {
         return res.status(400).json({ error: "Need values of all fields, Especially booking reference, Give some random number to it" });
@@ -33,6 +35,22 @@ const createBookingAPI = async (req, res) => {
         if (!dbUser) {
             return res.status(404).json({ error: "User not found" });
         }
+
+    
+    // Check if show exists and is valid
+    let show = await db.get(`
+      SELECT s.*, sc.id
+      FROM shows s
+      INNER JOIN screens sc ON s.screen_id = sc.id
+      WHERE s.id = ? AND s.is_active = 1
+    `, [showId]);
+    
+    if (!show) {
+      return res.status(404).json({
+        success: false,
+        message: 'Show not found'
+      });
+    }
     
     const alreadyBooked = await areSeatsAlreadyBooked(db, showId, seats);
 
@@ -66,25 +84,22 @@ const createBookingAPI = async (req, res) => {
 
         const seatIds = seats.map(getSeatId);
 
+    // Create new holds
+    // s
+
     //Get show Details
     const showQuery = `SELECT movies.title as movie, theaters.name as theater, screen_name as screen, show_time as showTime, show_date as date
      FROM ((shows inner join movies on shows.movie_id = movies.id) as T inner join screens
      on T.screen_id = screens.id) as Q inner join theaters on Q.theater_id = theaters.id WHERE shows.id = ?`;
-    let show = await db.get(showQuery, [showId]);
-    const showDateTimeString = `${show.date} ${show.showTime}`; // e.g., '2025-06-21 1:30 PM'
-        const showDateTime = new Date(showDateTimeString);
-
-        // Get current datetime
-        const currentDateTime = new Date();
-
-        // Compare
-        if (currentDateTime > showDateTime) {
-        return res.status(400).json({ error: "Show time has already passed" });
-        }
+    show = await db.get(showQuery, [showId]);
+    // s
 
     show = {...show,
         seats: seats
     };
+
+    
+
     const generateBookingReference = () => {
         const timestamp = Date.now().toString().slice(-6);  // Last 6 digits of timestamp
         const random = Math.floor(1000 + Math.random() * 900); // 4-digit random number
@@ -94,7 +109,7 @@ const createBookingAPI = async (req, res) => {
 
     try {
         const bookingQuery = `INSERT INTO bookings (booking_reference, user_id, show_id, total_seats, total_amount, user_email, booking_status, payment_status, booking_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-        const result = await db.run(bookingQuery, [bookingReference, dbUser.id, showId, seats.length, totalAmount, email, 'confirmed', 'completed', new Date().toISOString().split('T')[0]]);
+        const result = await db.run(bookingQuery, [bookingReference, dbUser.id, showId, seats.length, totalAmount, email, 'pending', 'pending', new Date().toISOString().split('T')[0]]);
         const response = {
             success: true,
             message: "Booking created successfully",
@@ -107,6 +122,12 @@ const createBookingAPI = async (req, res) => {
             const seatQuery = `INSERT INTO booked_seats (booking_id, seat_id, seat_identifier) VALUES (?, ?, ?)`;
             await db.run(seatQuery, [lastId, seatIds[i], seats[i]]);
         }
+
+        // Release seat holds
+        await db.run(`
+        DELETE FROM seat_holds WHERE show_id = ? AND user_id = ?
+        `, [showId, userId]);
+
         return res.status(201).json(response);
     } catch (error) {
         console.error("Error creating booking:", error);

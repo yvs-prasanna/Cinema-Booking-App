@@ -38,12 +38,14 @@ const getFnbMenu = async(req, res) => {
 //Create an Fnb order
 const addFnbOrder = async(req, res) => {
     let {bookingId, items} = req.body;
+
     if(!bookingId || !items || items.length === 0) {
         return res.status(400).json({
             status: "error",
             message: "Booking ID and items are required"
         });
     }
+
     const bookingReference = bookingId;
     const getBookingIdQuery = `SELECT * FROM bookings WHERE booking_reference = ?`;
     const bookingDetails = await db.query(getBookingIdQuery, [bookingReference]);
@@ -55,6 +57,8 @@ const addFnbOrder = async(req, res) => {
     }
     bookingId = bookingDetails[0].id;
     let total_price = 0;
+    let itemDetails = null;
+
     for(const item of items) {
         if(!item.itemId || !item.quantity) {
             return res.status(400).json({
@@ -62,8 +66,9 @@ const addFnbOrder = async(req, res) => {
                 message: "Each item must have an ID and quantity"
             });
         }
-        const getEachItemPriceQuery = `select price from fnb_items where id = ?`;
-        const itemDetails = await db.query(getEachItemPriceQuery, [item.itemId]);
+        const getEachItemPriceQuery = `select * from fnb_items where id = ?`;
+        itemDetails = await db.query(getEachItemPriceQuery, [item.itemId]);
+
         if(itemDetails.length === 0) {
             return res.status(404).json({
                 status: "error",
@@ -75,7 +80,23 @@ const addFnbOrder = async(req, res) => {
         total_price += totalPrice;
     }
     const insertOrderQuery = `INSERT INTO food_orders (booking_id, total_amount, order_status, created_at) VALUES ( ?, ?, "confirmed", ?)`;
-    await db.query(insertOrderQuery, [bookingId, total_price, new Date()]);
+    const orderResult = await db.run(insertOrderQuery, [bookingId, total_price, new Date()]);
+
+        const itemsMap = new Map(items.map(item => [item.itemId, item.quantity]));
+
+        const enrichedItemDetails = itemDetails.map(item => ({
+        ...item,
+        quantity: itemsMap.get(item.id) || 0 // default to 0 if not found
+        }));
+
+    
+    // Add order items
+    for (const item of enrichedItemDetails) {
+      await db.run(`
+        INSERT INTO food_order_items (food_order_id, fnb_item_id, quantity, unit_price, total_price)
+        VALUES (?, ?, ?, ?, ?)
+      `, [orderResult.id, item.id, item.quantity, item.price, total_price]);
+    }
 
 
     res.status(201).json({

@@ -45,6 +45,12 @@ const initializePayment = async (req, res) => {
         
         const transactionId = `TXN${Math.floor(Math.random() * 1000000)}`;
 
+         // Create payment record
+        await db.run(`
+      INSERT INTO payments (transaction_id, booking_id, amount, payment_method, payment_status)
+      VALUES (?, ?, ?, ?, 'pending')
+    `, [transactionId, booking.bookingId, totalAmount, paymentMethod]);
+
         res.status(200).json({
             success: true,
             transactionId,
@@ -66,6 +72,83 @@ const initializePayment = async (req, res) => {
     }
 };
 
-module.exports = {
-    initializePayment
+const confirmPayment = async (req, res, next) => {
+  try {
+    const { transactionId, gatewayResponse } = req.body;
+    const userId = req.userId;
+    
+    if (!transactionId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Transaction ID is required'
+      });
+    }
+    
+    // Get payment details
+    const payment = await db.get(`
+      SELECT p.*, b.booking_reference, b.user_id
+      FROM payments p
+      INNER JOIN bookings b ON p.booking_id = b.id
+      WHERE p.transaction_id = ? AND b.user_id = ?
+    `, [transactionId, userId]);
+    
+    if (!payment) {
+      return res.status(404).json({
+        success: false,
+        message: 'Payment not found'
+      });
+    }
+    
+    if (payment.payment_status === 'success') {
+      return res.status(400).json({
+        success: false,
+        message: 'Payment already confirmed'
+      });
+    }
+    
+    // In a real implementation, you would verify the payment with the payment gateway
+    // For this demo, we'll simulate a successful payment
+    const paymentSuccess = !gatewayResponse || gatewayResponse.status === 'success';
+    
+    const paymentStatus = paymentSuccess ? 'success' : 'failed';
+    
+    // Update payment status
+    await db.run(`
+      UPDATE payments 
+      SET payment_status = ?, gateway_response = ?, processed_at = datetime('now')
+      WHERE transaction_id = ?
+    `, [paymentStatus, JSON.stringify(gatewayResponse || {}), transactionId]);
+    
+    // Update booking payment status
+    await db.run(`
+      UPDATE bookings 
+      SET payment_status = ?
+      WHERE id = ?
+    `, [paymentStatus === 'success' ? 'completed' : 'failed', payment.booking_id]);
+    
+    if (paymentSuccess) {
+      res.json({
+        success: true,
+        message: 'Payment confirmed successfully',
+        transactionId,
+        bookingId: payment.booking_reference,
+        amount: payment.amount
+      });
+    } else {
+      res.status(400).json({
+        success: false,
+        message: 'Payment failed',
+        transactionId
+      });
+    }
+    
+  } catch (error) {
+    next(error);
+  }
 };
+
+module.exports = {
+  initializePayment,
+  confirmPayment
+};
+
