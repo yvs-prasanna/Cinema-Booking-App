@@ -409,6 +409,15 @@ Initiate payment for booking
 
 #### POST /api/payments/confirm
 Confirm payment
+### Request Body 
+json```
+{
+    "transactionId": "TXN948649",
+    "gatewayResponse": {
+        "status" : "success"
+    }
+}
+```
 
 ### 10. Admin APIs (Bonus)
 
