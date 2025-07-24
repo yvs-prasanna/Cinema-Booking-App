@@ -27,7 +27,7 @@ const registerAPI = async(req, res) => {
 const loginAPI = async(req, res) => {
     const {username, password, email} = req.body;
     if(!username || !password) {
-        return res.status(400).json({ error: 'Username and password are required' });
+        return res.status(400).json({ error: 'Username and password are required', username, password });
     }
     if(email === process.env.ADMIN_EMAIL){
         return adminLogin(req, res)
