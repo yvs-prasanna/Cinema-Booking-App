@@ -1,13 +1,13 @@
 const express = require('express');
 
 const db = require('./src/config/database');
-const authRoutes = require('./src/routes/authRoutes'); 
-const movieRoutes = require('./src/routes/movieRoutes'); 
-const theaterRoutes = require('./src/routes/theaterRoutes'); 
-const showRoutes = require('./src/routes/showRoutes'); 
-const bookingRoutes = require('./src/routes/bookingRoutes'); 
-const fnbRoutes = require('./src/routes/fnbRoutes'); 
-const paymentRoutes = require('./src/routes/paymentRoutes'); 
+const authRoutes = require('./src/routes/authRoutes');
+const movieRoutes = require('./src/routes/movieRoutes');
+const theaterRoutes = require('./src/routes/theaterRoutes');
+const showRoutes = require('./src/routes/showRoutes');
+const bookingRoutes = require('./src/routes/bookingRoutes');
+const fnbRoutes = require('./src/routes/fnbRoutes');
+const paymentRoutes = require('./src/routes/paymentRoutes');
 const adminRoutes = require("./src/routes/adminRoutes")
 const seatRoutes = require('./src/routes/seatRoutes');
 const userRoutes = require('./src/routes/userRoutes');
@@ -15,10 +15,14 @@ const userRoutes = require('./src/routes/userRoutes');
 const app = express();
 
 app.use(express.json());
+// Node.js Express backend
+const cors = require("cors");
+app.use(cors());
+
 
 require('dotenv').config();
 
-const connectDB = async() => {
+const connectDB = async () => {
   try {
     await db.connect();
     console.log('Database connected successfully');
